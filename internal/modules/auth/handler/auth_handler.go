@@ -202,7 +202,7 @@ func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 // @Router       /api/v1/auth/health [get]
 func (h *AuthHandler) HealthCheck(c fiber.Ctx) error {
 	return apputils.SuccessResponse(c, fiber.StatusOK, "Auth service is healthy", fiber.Map{
-		"version": "1.0.0",
+		"version": "1.1.0",
 		"roles":   utils.RoleHierarchy,
 	})
 }
