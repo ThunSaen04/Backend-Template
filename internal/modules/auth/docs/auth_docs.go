@@ -89,6 +89,12 @@ const docTemplateauth = `{
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -137,6 +143,12 @@ const docTemplateauth = `{
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -247,6 +259,12 @@ const docTemplateauth = `{
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -302,6 +320,12 @@ const docTemplateauth = `{
                     },
                     "409": {
                         "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -398,6 +422,10 @@ const docTemplateauth = `{
         },
         "dto.LoginRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -441,6 +469,9 @@ const docTemplateauth = `{
         },
         "dto.RefreshRequest": {
             "type": "object",
+            "required": [
+                "refresh_token"
+            ],
             "properties": {
                 "refresh_token": {
                     "type": "string",
@@ -450,6 +481,10 @@ const docTemplateauth = `{
         },
         "dto.RegisterRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -457,6 +492,7 @@ const docTemplateauth = `{
                 },
                 "password": {
                     "type": "string",
+                    "minLength": 6,
                     "example": "secret123"
                 }
             }

@@ -83,6 +83,12 @@
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -131,6 +137,12 @@
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -241,6 +253,12 @@
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -296,6 +314,12 @@
                     },
                     "409": {
                         "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -392,6 +416,10 @@
         },
         "dto.LoginRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -435,6 +463,9 @@
         },
         "dto.RefreshRequest": {
             "type": "object",
+            "required": [
+                "refresh_token"
+            ],
             "properties": {
                 "refresh_token": {
                     "type": "string",
@@ -444,6 +475,10 @@
         },
         "dto.RegisterRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -451,6 +486,7 @@
                 },
                 "password": {
                     "type": "string",
+                    "minLength": 6,
                     "example": "secret123"
                 }
             }

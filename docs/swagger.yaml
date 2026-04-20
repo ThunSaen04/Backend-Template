@@ -42,6 +42,9 @@ definitions:
       password:
         example: secret123
         type: string
+    required:
+    - email
+    - password
     type: object
   dto.MessageResponse:
     properties:
@@ -69,6 +72,8 @@ definitions:
       refresh_token:
         example: eyJhbGciOiJIUzI1NiIs...
         type: string
+    required:
+    - refresh_token
     type: object
   dto.RegisterRequest:
     properties:
@@ -77,7 +82,11 @@ definitions:
         type: string
       password:
         example: secret123
+        minLength: 6
         type: string
+    required:
+    - email
+    - password
     type: object
 host: localhost:8080
 info:
@@ -85,7 +94,7 @@ info:
   description: A production-ready RESTful backend with JWT authentication (Access
     + Refresh tokens), Role-Based Access Control, and Clean Architecture.
   title: Backend Template API
-  version: 1.0.0
+  version: 1.1.0
 paths:
   /api/v1/auth/health:
     get:
@@ -133,6 +142,10 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
       summary: Login user
       tags:
       - Auth
@@ -161,6 +174,10 @@ paths:
             $ref: '#/definitions/dto.ErrorResponse'
         "401":
           description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
       security:
@@ -229,6 +246,10 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
       summary: Refresh access token
       tags:
       - Auth
@@ -263,6 +284,10 @@ paths:
             $ref: '#/definitions/dto.ErrorResponse'
         "409":
           description: Conflict
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
       summary: Register a new user

@@ -89,6 +89,12 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -137,6 +143,12 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -247,6 +259,12 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
                     }
                 }
             }
@@ -302,6 +320,12 @@ const docTemplate = `{
                     },
                     "409": {
                         "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/dto.ErrorResponse"
                         }
@@ -398,6 +422,10 @@ const docTemplate = `{
         },
         "dto.LoginRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -441,6 +469,9 @@ const docTemplate = `{
         },
         "dto.RefreshRequest": {
             "type": "object",
+            "required": [
+                "refresh_token"
+            ],
             "properties": {
                 "refresh_token": {
                     "type": "string",
@@ -450,6 +481,10 @@ const docTemplate = `{
         },
         "dto.RegisterRequest": {
             "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
             "properties": {
                 "email": {
                     "type": "string",
@@ -457,6 +492,7 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string",
+                    "minLength": 6,
                     "example": "secret123"
                 }
             }
@@ -473,7 +509,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0.0",
+	Version:          "1.1.0",
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
