@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"backend-template/internal/modules/auth/utils"
+	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -15,19 +16,13 @@ func AuthMiddleware() fiber.Handler {
 		// Get Authorization header
 		authHeader := c.Get("Authorization")
 		if authHeader == "" {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"success": false,
-				"message": "Missing authorization header",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Missing authorization header")
 		}
 
 		// Extract token from "Bearer <token>"
 		parts := strings.Split(authHeader, " ")
 		if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"success": false,
-				"message": "Invalid authorization header format",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Invalid authorization header format")
 		}
 
 		tokenString := parts[1]
@@ -35,10 +30,7 @@ func AuthMiddleware() fiber.Handler {
 		// Parse and validate token
 		claims, err := utils.ParseToken(tokenString)
 		if err != nil {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"success": false,
-				"message": "Invalid or expired token",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Invalid or expired token")
 		}
 
 		// Store user data in Locals for downstream handlers
@@ -48,3 +40,4 @@ func AuthMiddleware() fiber.Handler {
 		return c.Next()
 	}
 }
+

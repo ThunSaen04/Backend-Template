@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"backend-template/internal/modules/auth/utils"
+	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -13,20 +14,15 @@ func RoleMiddleware(requiredRole string) fiber.Handler {
 		// Get user role from Locals (set by AuthMiddleware)
 		userRole, ok := c.Locals("user_role").(string)
 		if !ok || userRole == "" {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"success": false,
-				"message": "Unauthorized: role not found in token",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Unauthorized: role not found in token")
 		}
 
 		// Check if user's role meets the required permission level
 		if !utils.HasPermission(userRole, requiredRole) {
-			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
-				"success": false,
-				"message": "Forbidden: insufficient permissions",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusForbidden, "Forbidden: insufficient permissions")
 		}
 
 		return c.Next()
 	}
 }
+

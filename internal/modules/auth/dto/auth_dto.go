@@ -2,19 +2,19 @@ package dto
 
 // RegisterRequest represents the payload for user registration
 type RegisterRequest struct {
-	Email    string `json:"email" example:"user@example.com"`
-	Password string `json:"password" example:"secret123"`
+	Email    string `json:"email" validate:"required,email" example:"user@example.com"`
+	Password string `json:"password" validate:"required,min=6" example:"secret123"`
 }
 
 // LoginRequest represents the payload for user login
 type LoginRequest struct {
-	Email    string `json:"email" example:"user@example.com"`
-	Password string `json:"password" example:"secret123"`
+	Email    string `json:"email" validate:"required,email" example:"user@example.com"`
+	Password string `json:"password" validate:"required" example:"secret123"`
 }
 
 // RefreshRequest represents the payload for token refresh
 type RefreshRequest struct {
-	RefreshToken string `json:"refresh_token" example:"eyJhbGciOiJIUzI1NiIs..."`
+	RefreshToken string `json:"refresh_token" validate:"required" example:"eyJhbGciOiJIUzI1NiIs..."`
 }
 
 // AuthResponse represents the response after successful authentication

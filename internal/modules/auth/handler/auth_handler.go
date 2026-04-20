@@ -4,6 +4,7 @@ import (
 	"backend-template/internal/modules/auth/dto"
 	"backend-template/internal/modules/auth/service"
 	"backend-template/internal/modules/auth/utils"
+	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -28,45 +29,26 @@ func NewAuthHandler(service service.AuthService) *AuthHandler {
 // @Success      201      {object}  dto.DataResponse{data=dto.AuthResponse}
 // @Failure      400      {object}  dto.ErrorResponse
 // @Failure      409      {object}  dto.ErrorResponse
+// @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/register [post]
 func (h *AuthHandler) Register(c fiber.Ctx) error {
 	var req dto.RegisterRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Invalid request body",
-		})
+		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
 	}
 
-	// Basic validation
-	if req.Email == "" || req.Password == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Email and password are required",
-		})
-	}
-
-	if len(req.Password) < 6 {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Password must be at least 6 characters",
-		})
+	// Struct validation (automatic via validate tags)
+	if errs := apputils.ValidateStruct(&req); errs != nil {
+		return apputils.ValidationErrorResponse(c, errs)
 	}
 
 	response, err := h.service.Register(&req)
 	if err != nil {
-		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return apputils.ErrorResponse(c, fiber.StatusConflict, err.Error())
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"success": true,
-		"message": "User registered successfully",
-		"data":    response,
-	})
+	return apputils.SuccessResponse(c, fiber.StatusCreated, "User registered successfully", response)
 }
 
 // Login godoc
@@ -79,38 +61,26 @@ func (h *AuthHandler) Register(c fiber.Ctx) error {
 // @Success      200      {object}  dto.DataResponse{data=dto.AuthResponse}
 // @Failure      400      {object}  dto.ErrorResponse
 // @Failure      401      {object}  dto.ErrorResponse
+// @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/login [post]
 func (h *AuthHandler) Login(c fiber.Ctx) error {
 	var req dto.LoginRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Invalid request body",
-		})
+		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
 	}
 
-	// Basic validation
-	if req.Email == "" || req.Password == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Email and password are required",
-		})
+	// Struct validation (automatic via validate tags)
+	if errs := apputils.ValidateStruct(&req); errs != nil {
+		return apputils.ValidationErrorResponse(c, errs)
 	}
 
 	response, err := h.service.Login(&req)
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return apputils.ErrorResponse(c, fiber.StatusUnauthorized, err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Login successful",
-		"data":    response,
-	})
+	return apputils.SuccessResponse(c, fiber.StatusOK, "Login successful", response)
 }
 
 // RefreshToken godoc
@@ -123,37 +93,26 @@ func (h *AuthHandler) Login(c fiber.Ctx) error {
 // @Success      200      {object}  dto.DataResponse{data=dto.AuthResponse}
 // @Failure      400      {object}  dto.ErrorResponse
 // @Failure      401      {object}  dto.ErrorResponse
+// @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
 	var req dto.RefreshRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Invalid request body",
-		})
+		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
 	}
 
-	if req.RefreshToken == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Refresh token is required",
-		})
+	// Struct validation (automatic via validate tags)
+	if errs := apputils.ValidateStruct(&req); errs != nil {
+		return apputils.ValidationErrorResponse(c, errs)
 	}
 
 	response, err := h.service.RefreshToken(&req)
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return apputils.ErrorResponse(c, fiber.StatusUnauthorized, err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Token refreshed successfully",
-		"data":    response,
-	})
+	return apputils.SuccessResponse(c, fiber.StatusOK, "Token refreshed successfully", response)
 }
 
 // Logout godoc
@@ -167,35 +126,25 @@ func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
 // @Success      200      {object}  dto.MessageResponse
 // @Failure      400      {object}  dto.ErrorResponse
 // @Failure      401      {object}  dto.ErrorResponse
+// @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/logout [post]
 func (h *AuthHandler) Logout(c fiber.Ctx) error {
 	var req dto.RefreshRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Invalid request body",
-		})
+		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
 	}
 
-	if req.RefreshToken == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"success": false,
-			"message": "Refresh token is required",
-		})
+	// Struct validation (automatic via validate tags)
+	if errs := apputils.ValidateStruct(&req); errs != nil {
+		return apputils.ValidationErrorResponse(c, errs)
 	}
 
 	if err := h.service.Logout(req.RefreshToken); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return apputils.ErrorResponse(c, fiber.StatusInternalServerError, err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Logged out successfully",
-	})
+	return apputils.MessageResponse(c, fiber.StatusOK, "Logged out successfully")
 }
 
 // GetProfile godoc
@@ -212,27 +161,18 @@ func (h *AuthHandler) GetProfile(c fiber.Ctx) error {
 	// Extract user_id from JWT claims stored in Locals by auth middleware
 	userID, ok := c.Locals("user_id").(uint)
 	if !ok {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"success": false,
-			"message": "Unauthorized",
-		})
+		return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Unauthorized")
 	}
 
 	user, err := h.service.GetProfile(userID)
 	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"success": false,
-			"message": err.Error(),
-		})
+		return apputils.ErrorResponse(c, fiber.StatusNotFound, err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"data": fiber.Map{
-			"id":    user.ID,
-			"email": user.Email,
-			"role":  user.Role,
-		},
+	return apputils.SuccessResponse(c, fiber.StatusOK, "Profile fetched successfully", fiber.Map{
+		"id":    user.ID,
+		"email": user.Email,
+		"role":  user.Role,
 	})
 }
 
@@ -250,10 +190,7 @@ func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 	// This endpoint is protected by role middleware (admin only)
 	_ = c.Locals("user_id")
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Admin access granted - user list endpoint",
-	})
+	return apputils.MessageResponse(c, fiber.StatusOK, "Admin access granted - user list endpoint")
 }
 
 // HealthCheck godoc
@@ -264,9 +201,7 @@ func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 // @Success      200  {object}  dto.MessageResponse
 // @Router       /api/v1/auth/health [get]
 func (h *AuthHandler) HealthCheck(c fiber.Ctx) error {
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"success": true,
-		"message": "Auth service is healthy",
+	return apputils.SuccessResponse(c, fiber.StatusOK, "Auth service is healthy", fiber.Map{
 		"version": "1.0.0",
 		"roles":   utils.RoleHierarchy,
 	})

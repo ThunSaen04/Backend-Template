@@ -1,0 +1,36 @@
+# Version control
+.git
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment (secrets)
+.env
+
+# Build output
+/bin/
+/tmp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in runtime image)
+docs/
+*.md
+LICENSE
+
+# Test files
+*_test.go
+
+# Docker files (prevent recursive copy)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Scripts
+scripts/

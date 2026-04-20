@@ -3,6 +3,8 @@ package middleware
 import (
 	"time"
 
+	apputils "backend-template/internal/utils"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/limiter"
 )
@@ -14,10 +16,7 @@ func APILimiter() fiber.Handler {
 		Max:        100,
 		Expiration: 1 * time.Minute,
 		LimitReached: func(c fiber.Ctx) error {
-			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-				"success": false,
-				"message": "Too many requests. Please try again later.",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusTooManyRequests, "Too many requests. Please try again later.")
 		},
 	})
 }
@@ -30,10 +29,8 @@ func StrictAuthLimiter() fiber.Handler {
 		Max:        5,
 		Expiration: 1 * time.Minute,
 		LimitReached: func(c fiber.Ctx) error {
-			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-				"success": false,
-				"message": "Too many attempts. Please wait before trying again.",
-			})
+			return apputils.ErrorResponse(c, fiber.StatusTooManyRequests, "Too many attempts. Please wait before trying again.")
 		},
 	})
 }
+
