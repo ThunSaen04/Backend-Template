@@ -4,16 +4,16 @@ A production-ready RESTful backend template built with Go (Golang). Designed fol
 
 ## 🌟 Key Features
 
-*   ⚡ **High Performance**: Built on `fiber/v3`, an Express-inspired web framework for Go.
-*   🏗️ **Clean Architecture**: Decoupled layers (Handler → Service → Repository → Model).
-*   🗄️ **Multi-Database Support**: Utilizes `GORM` with dynamic connection loading. Supports **PostgreSQL**, **MySQL**, **SQL Server**, and **SQLite** out of the box via the `DB_TYPE` environment variable. Includes Auto-Migration capability.
-*   🔐 **Advanced Authentication**:
-    *   Dual Token Approach: **Access Token** (6h) & **Refresh Token** (24h) via JWT.
-    *   Token Rotation & DB Revocation system for high security.
-*   🛡️ **Role-Based Access Control (RBAC)**: Level-based Role verification (`member`, `admin`).
-*   🚥 **Security & Protection**: Built-in **Rate Limiting** via Fiber middleware to prevent brute-force attacks and abuse.
-*   📚 **Auto-Generated Swagger Docs**: Powered by `swaggo`, supporting both Global and Module-specific API documentation UI.
-*   ⚙️ **Environment configuration**: Clean setup using `.env` (`joho/godotenv`).
+- ⚡ **High Performance**: Built on `fiber/v3`, an Express-inspired web framework for Go.
+- 🏗️ **Clean Architecture**: Decoupled layers (Handler → Service → Repository → Model).
+- 🗄️ **Multi-Database Support**: Utilizes `GORM` with dynamic connection loading. Supports **PostgreSQL**, **MySQL**, **SQL Server**, and **SQLite** out of the box via the `DB_TYPE` environment variable. Includes Auto-Migration capability.
+- 🔐 **Advanced Authentication**:
+  - Dual Token Approach: **Access Token** (6h) & **Refresh Token** (24h) via JWT.
+  - Token Rotation & DB Revocation system for high security.
+- 🛡️ **Role-Based Access Control (RBAC)**: Level-based Role verification (`member`, `admin`).
+- 🚥 **Security & Protection**: Built-in **Rate Limiting** via Fiber middleware to prevent brute-force attacks and abuse.
+- 📚 **Auto-Generated Swagger Docs**: Powered by `swaggo`, supporting both Global and Module-specific API documentation UI.
+- ⚙️ **Environment configuration**: Clean setup using `.env` (`joho/godotenv`).
 
 ---
 
@@ -45,12 +45,12 @@ Backend_Template/
 
 ## 🛠️ Prerequisites
 
-*   [Go 1.25+](https://go.dev/dl/)
-*   A Database (PostgreSQL, MySQL, SQL Server, or SQLite)
-*   `swag` CLI (for generating Swagger docs):
-    ```bash
-    go install github.com/swaggo/swag/cmd/swag@latest
-    ```
+- [Go 1.25+](https://go.dev/dl/)
+- A Database (PostgreSQL, MySQL, SQL Server, or SQLite)
+- `swag` CLI (for generating Swagger docs):
+  ```bash
+  go install github.com/swaggo/swag/cmd/swag@latest
+  ```
 
 ---
 
@@ -67,7 +67,7 @@ cd Backend-Template
 
 Copy the example environment file and adjust your database credentials:
 
-```bash
+````bash
 cp .env.example .env
 Ensure your Database instance is running and set the `DB_TYPE` in your `.env` to match your target (`postgres`, `mysql`, `sqlserver`, `sqlite`).
 
@@ -75,7 +75,7 @@ Ensure your Database instance is running and set the `DB_TYPE` in your `.env` to
 
 ```bash
 go mod tidy
-```
+````
 
 ### 4. Run the Application
 
@@ -94,12 +94,13 @@ This template offers advanced Swagger multi-instance configuration.
 **Generate Documentation:**
 Use the provided scripts to regenerate Swagger docs whenever you update Godoc annotations:
 
-*   Windows: `scripts\swagger-gen.bat`
-*   Mac/Linux: `./scripts/swagger-gen.sh`
+- Windows: `scripts\swagger-gen.bat`
+- Mac/Linux: `./scripts/swagger-gen.sh`
 
 **Available UIs:**
-*   🌐 **Global Swagger API**: `http://localhost:8080/swagger/index.html`
-*   🔑 **Auth Module API**: `http://localhost:8080/swagger/auth/index.html`
+
+- 🌐 **Global Swagger API**: `http://localhost:8080/swagger/index.html`
+- 🔑 **Auth Module API**: `http://localhost:8080/swagger/auth/index.html`
 
 ---
 
@@ -107,19 +108,19 @@ Use the provided scripts to regenerate Swagger docs whenever you update Godoc an
 
 All endpoints are versioned under `/api/v1`.
 
-| Method | Endpoint | Auth Required | Role | Rate Limit | Description |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| `GET` | `/` | ❌ | - | 100/min | Root API status |
-| `GET` | `/api/v1/auth/health` | ❌ | - | 100/min | DB & Module Health check |
-| `POST` | `/api/v1/auth/register` | ❌ | - | 5/min | Sign up a new user |
-| `POST` | `/api/v1/auth/login` | ❌ | - | 5/min | Authenticate & Fetch Tokens |
-| `POST` | `/api/v1/auth/refresh` | ❌ | - | 100/min | Refresh Access Token |
-| `POST` | `/api/v1/auth/logout` | ✅ | Any | 100/min | Revoke Session |
-| `GET` | `/api/v1/auth/profile` | ✅ | Any | 100/min | Retrieve current User data |
-| `GET` | `/api/v1/auth/users` | ✅ | `admin` | 100/min | Admin: List all Users |
+| Method | Endpoint                | Auth Required |  Role   | Rate Limit | Description                 |
+| :----- | :---------------------- | :-----------: | :-----: | :--------: | :-------------------------- |
+| `GET`  | `/`                     |      ❌       |    -    |  100/min   | Root API status             |
+| `GET`  | `/api/v1/auth/health`   |      ❌       |    -    |  100/min   | DB & Module Health check    |
+| `POST` | `/api/v1/auth/register` |      ❌       |    -    |   5/min    | Sign up a new user          |
+| `POST` | `/api/v1/auth/login`    |      ❌       |    -    |   5/min    | Authenticate & Fetch Tokens |
+| `POST` | `/api/v1/auth/refresh`  |      ❌       |    -    |  100/min   | Refresh Access Token        |
+| `POST` | `/api/v1/auth/logout`   |      ✅       |   Any   |  100/min   | Revoke Session              |
+| `GET`  | `/api/v1/auth/profile`  |      ✅       |   Any   |  100/min   | Retrieve current User data  |
+| `GET`  | `/api/v1/auth/users`    |      ✅       | `admin` |  100/min   | Admin: List all Users       |
 
 ---
 
 ## 🛡️ License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Thun Saen](https://thunsaen.online/).
