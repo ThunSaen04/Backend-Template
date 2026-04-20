@@ -32,9 +32,4 @@ func ConnectDB() {
 	}
 
 	log.Println("Database connected successfully")
-
-	// AutoMigrate models
-	AutoMigrate()
-
-	log.Println("Database migration completed")
 }
