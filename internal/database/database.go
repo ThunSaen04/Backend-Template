@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"backend-template/internal/config"
-	"backend-template/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -35,13 +34,7 @@ func ConnectDB() {
 	log.Println("Database connected successfully")
 
 	// AutoMigrate models
-	err = DB.AutoMigrate(
-		&models.User{},
-		&models.RefreshToken{},
-	)
-	if err != nil {
-		log.Fatalf("Failed to auto-migrate: %v", err)
-	}
+	AutoMigrate()
 
 	log.Println("Database migration completed")
 }
