@@ -10,6 +10,7 @@ import (
 
 // Config holds all configuration values loaded from .env
 type Config struct {
+	DBType     string
 	DBHost     string
 	DBPort     string
 	DBUser     string
@@ -33,6 +34,7 @@ func LoadConfig() {
 	}
 
 	AppConfig = &Config{
+		DBType:     getEnv("DB_TYPE", "postgres"),
 		DBHost:     getEnv("DB_HOST", "localhost"),
 		DBPort:     getEnv("DB_PORT", "5432"),
 		DBUser:     getEnv("DB_USER", "postgres"),

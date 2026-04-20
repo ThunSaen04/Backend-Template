@@ -1,21 +1,16 @@
 package database
 
 import (
+	"backend-template/internal/config"
 	"fmt"
 	"log"
-
-	"backend-template/internal/config"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
-// DB is the global database instance
-var DB *gorm.DB
-
-// ConnectDB establishes a connection to PostgreSQL and runs AutoMigrate
-func ConnectDB() {
+func ConnectDBPostgreSQL() {
 	cfg := config.AppConfig
 
 	dsn := fmt.Sprintf(
