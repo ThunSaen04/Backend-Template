@@ -39,7 +39,7 @@ func main() {
 
 	// Create Fiber app with custom error handler
 	app := fiber.New(fiber.Config{
-		AppName: "Backend Template v1.0.0",
+		AppName: "Backend Template v1.1.0",
 		ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
 			if e, ok := err.(*fiber.Error); ok {
