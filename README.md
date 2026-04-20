@@ -6,7 +6,7 @@ A production-ready RESTful backend template built with Go (Golang). Designed fol
 
 *   ⚡ **High Performance**: Built on `fiber/v3`, an Express-inspired web framework for Go.
 *   🏗️ **Clean Architecture**: Decoupled layers (Handler → Service → Repository → Model).
-*   🗄️ **ORM & Database**: Utilizes `GORM` with PostgreSQL (`driver/postgres`) + Auto-Migration.
+*   🗄️ **Multi-Database Support**: Utilizes `GORM` with dynamic connection loading. Supports **PostgreSQL**, **MySQL**, **SQL Server**, and **SQLite** out of the box via the `DB_TYPE` environment variable. Includes Auto-Migration capability.
 *   🔐 **Advanced Authentication**:
     *   Dual Token Approach: **Access Token** (6h) & **Refresh Token** (24h) via JWT.
     *   Token Rotation & DB Revocation system for high security.
@@ -24,7 +24,7 @@ Backend_Template/
 ├── docs/                                  # Global Swagger Docs (Auto-generated)
 ├── internal/
 │   ├── config/                            # Environment variable loader loader
-│   ├── database/                          # DB Connection & AutoMigrate
+│   ├── database/                          # DB Connection (Multi-driver) & AutoMigrate
 │   ├── models/                            # GORM Entities (User, RefreshToken)
 │   └── modules/
 │       └── auth/                          # Auth feature module
@@ -46,7 +46,7 @@ Backend_Template/
 ## 🛠️ Prerequisites
 
 *   [Go 1.25+](https://go.dev/dl/)
-*   [PostgreSQL](https://www.postgresql.org/download/)
+*   A Database (PostgreSQL, MySQL, SQL Server, or SQLite)
 *   `swag` CLI (for generating Swagger docs):
     ```bash
     go install github.com/swaggo/swag/cmd/swag@latest
@@ -69,9 +69,7 @@ Copy the example environment file and adjust your database credentials:
 
 ```bash
 cp .env.example .env
-```
-
-Ensure your PostgreSQL instance is running and create the targeted database (default: `backend_template`).
+Ensure your Database instance is running and set the `DB_TYPE` in your `.env` to match your target (`postgres`, `mysql`, `sqlserver`, `sqlite`).
 
 ### 3. Install Dependencies
 
