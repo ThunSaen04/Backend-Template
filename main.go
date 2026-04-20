@@ -20,7 +20,7 @@ import (
 )
 
 // @title           Backend Template API
-// @version         1.0.0
+// @version         1.1.0
 // @description     A production-ready RESTful backend with JWT authentication (Access + Refresh tokens), Role-Based Access Control, and Clean Architecture.
 // @host            localhost:8080
 // @BasePath        /
