@@ -1,9 +1,9 @@
-package handler
+package handler_auth
 
 import (
-	"backend-template/internal/modules/auth/dto"
-	"backend-template/internal/modules/auth/service"
-	"backend-template/internal/modules/auth/utils"
+	dto_auth "backend-template/internal/modules/auth/dto"
+	service_auth "backend-template/internal/modules/auth/service"
+	utils_auth "backend-template/internal/modules/auth/utils"
 	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
@@ -11,11 +11,11 @@ import (
 
 // AuthHandler handles HTTP requests for authentication
 type AuthHandler struct {
-	service service.AuthService
+	service service_auth.AuthService
 }
 
 // NewAuthHandler creates a new instance of AuthHandler
-func NewAuthHandler(service service.AuthService) *AuthHandler {
+func NewAuthHandler(service service_auth.AuthService) *AuthHandler {
 	return &AuthHandler{service: service}
 }
 
@@ -32,7 +32,7 @@ func NewAuthHandler(service service.AuthService) *AuthHandler {
 // @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/register [post]
 func (h *AuthHandler) Register(c fiber.Ctx) error {
-	var req dto.RegisterRequest
+	var req dto_auth.RegisterRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
 		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
@@ -64,7 +64,7 @@ func (h *AuthHandler) Register(c fiber.Ctx) error {
 // @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/login [post]
 func (h *AuthHandler) Login(c fiber.Ctx) error {
-	var req dto.LoginRequest
+	var req dto_auth.LoginRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
 		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
@@ -96,7 +96,7 @@ func (h *AuthHandler) Login(c fiber.Ctx) error {
 // @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
-	var req dto.RefreshRequest
+	var req dto_auth.RefreshRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
 		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
@@ -129,7 +129,7 @@ func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
 // @Failure      422      {object}  dto.ErrorResponse
 // @Router       /api/v1/auth/logout [post]
 func (h *AuthHandler) Logout(c fiber.Ctx) error {
-	var req dto.RefreshRequest
+	var req dto_auth.RefreshRequest
 
 	if err := c.Bind().JSON(&req); err != nil {
 		return apputils.ErrorResponse(c, fiber.StatusBadRequest, "Invalid request body")
@@ -203,6 +203,6 @@ func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 func (h *AuthHandler) HealthCheck(c fiber.Ctx) error {
 	return apputils.SuccessResponse(c, fiber.StatusOK, "Auth service is healthy", fiber.Map{
 		"version": "1.1.0",
-		"roles":   utils.RoleHierarchy,
+		"roles":   utils_auth.RoleHierarchy,
 	})
 }

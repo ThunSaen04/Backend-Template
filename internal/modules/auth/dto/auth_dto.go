@@ -1,4 +1,4 @@
-package dto
+package dto_auth
 
 // RegisterRequest represents the payload for user registration
 type RegisterRequest struct {

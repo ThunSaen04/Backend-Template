@@ -2,9 +2,9 @@ package routes
 
 import (
 	"backend-template/internal/database"
-	"backend-template/internal/modules/auth/handler"
-	"backend-template/internal/modules/auth/repository"
-	"backend-template/internal/modules/auth/service"
+	handler_auth "backend-template/internal/modules/auth/handler"
+	repository_auth "backend-template/internal/modules/auth/repository"
+	service_auth "backend-template/internal/modules/auth/service"
 	"backend-template/middleware"
 
 	"github.com/gofiber/fiber/v3"
@@ -12,9 +12,9 @@ import (
 
 // SetupAuthRoutes configures all authentication-related routes under /api/v1/auth
 func SetupAuthRoutes(v1 fiber.Router) {
-	authRepo := repository.NewAuthRepository(database.DB)
-	authService := service.NewAuthService(authRepo)
-	authHandler := handler.NewAuthHandler(authService)
+	authRepo := repository_auth.NewAuthRepository(database.DB)
+	authService := service_auth.NewAuthService(authRepo)
+	authHandler := handler_auth.NewAuthHandler(authService)
 
 	auth := v1.Group("/auth")
 

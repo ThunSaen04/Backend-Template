@@ -3,7 +3,7 @@ package middleware
 import (
 	"strings"
 
-	"backend-template/internal/modules/auth/utils"
+	utils_auth "backend-template/internal/modules/auth/utils"
 	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
@@ -28,7 +28,7 @@ func AuthMiddleware() fiber.Handler {
 		tokenString := parts[1]
 
 		// Parse and validate token
-		claims, err := utils.ParseToken(tokenString)
+		claims, err := utils_auth.ParseToken(tokenString)
 		if err != nil {
 			return apputils.ErrorResponse(c, fiber.StatusUnauthorized, "Invalid or expired token")
 		}
@@ -40,4 +40,3 @@ func AuthMiddleware() fiber.Handler {
 		return c.Next()
 	}
 }
-

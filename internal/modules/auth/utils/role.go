@@ -1,4 +1,4 @@
-package utils
+package utils_auth
 
 // RoleHierarchy defines the permission level for each role
 var RoleHierarchy = map[string]int{

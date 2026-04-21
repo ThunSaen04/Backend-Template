@@ -1,4 +1,4 @@
-package service
+package service_auth
 
 import (
 	"errors"
@@ -6,34 +6,34 @@ import (
 
 	"backend-template/internal/config"
 	"backend-template/internal/models"
-	"backend-template/internal/modules/auth/dto"
-	"backend-template/internal/modules/auth/repository"
-	"backend-template/internal/modules/auth/utils"
+	dto_auth "backend-template/internal/modules/auth/dto"
+	repository_auth "backend-template/internal/modules/auth/repository"
+	utils_auth "backend-template/internal/modules/auth/utils"
 
 	"gorm.io/gorm"
 )
 
 // AuthService defines the interface for authentication business logic
 type AuthService interface {
-	Register(req *dto.RegisterRequest) (*dto.AuthResponse, error)
-	Login(req *dto.LoginRequest) (*dto.AuthResponse, error)
-	RefreshToken(req *dto.RefreshRequest) (*dto.AuthResponse, error)
+	Register(req *dto_auth.RegisterRequest) (*dto_auth.AuthResponse, error)
+	Login(req *dto_auth.LoginRequest) (*dto_auth.AuthResponse, error)
+	RefreshToken(req *dto_auth.RefreshRequest) (*dto_auth.AuthResponse, error)
 	Logout(refreshToken string) error
 	GetProfile(userID uint) (*models.User, error)
 }
 
 // authServiceImpl is the concrete implementation of AuthService
 type authServiceImpl struct {
-	repo repository.AuthRepository
+	repo repository_auth.AuthRepository
 }
 
 // NewAuthService creates a new instance of AuthService
-func NewAuthService(repo repository.AuthRepository) AuthService {
+func NewAuthService(repo repository_auth.AuthRepository) AuthService {
 	return &authServiceImpl{repo: repo}
 }
 
 // Register handles user registration with password hashing and default role assignment
-func (s *authServiceImpl) Register(req *dto.RegisterRequest) (*dto.AuthResponse, error) {
+func (s *authServiceImpl) Register(req *dto_auth.RegisterRequest) (*dto_auth.AuthResponse, error) {
 	// Check if user already exists
 	existingUser, err := s.repo.FindByEmail(req.Email)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
@@ -44,7 +44,7 @@ func (s *authServiceImpl) Register(req *dto.RegisterRequest) (*dto.AuthResponse,
 	}
 
 	// Hash the password
-	hashedPassword, err := utils.HashPassword(req.Password)
+	hashedPassword, err := utils_auth.HashPassword(req.Password)
 	if err != nil {
 		return nil, errors.New("failed to hash password")
 	}
@@ -65,7 +65,7 @@ func (s *authServiceImpl) Register(req *dto.RegisterRequest) (*dto.AuthResponse,
 }
 
 // Login validates credentials and returns access + refresh tokens
-func (s *authServiceImpl) Login(req *dto.LoginRequest) (*dto.AuthResponse, error) {
+func (s *authServiceImpl) Login(req *dto_auth.LoginRequest) (*dto_auth.AuthResponse, error) {
 	// Find user by email
 	user, err := s.repo.FindByEmail(req.Email)
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *authServiceImpl) Login(req *dto.LoginRequest) (*dto.AuthResponse, error
 	}
 
 	// Compare password
-	if !utils.ComparePassword(user.Password, req.Password) {
+	if !utils_auth.ComparePassword(user.Password, req.Password) {
 		return nil, errors.New("invalid email or password")
 	}
 
@@ -82,9 +82,9 @@ func (s *authServiceImpl) Login(req *dto.LoginRequest) (*dto.AuthResponse, error
 }
 
 // RefreshToken validates a refresh token and generates a new access token
-func (s *authServiceImpl) RefreshToken(req *dto.RefreshRequest) (*dto.AuthResponse, error) {
+func (s *authServiceImpl) RefreshToken(req *dto_auth.RefreshRequest) (*dto_auth.AuthResponse, error) {
 	// Parse the refresh token to get claims
-	claims, err := utils.ParseToken(req.RefreshToken)
+	claims, err := utils_auth.ParseToken(req.RefreshToken)
 	if err != nil {
 		return nil, errors.New("invalid or expired refresh token")
 	}
@@ -137,15 +137,15 @@ func (s *authServiceImpl) GetProfile(userID uint) (*models.User, error) {
 }
 
 // generateTokenPair creates an access token and a refresh token, saving the refresh token to DB
-func (s *authServiceImpl) generateTokenPair(user *models.User) (*dto.AuthResponse, error) {
+func (s *authServiceImpl) generateTokenPair(user *models.User) (*dto_auth.AuthResponse, error) {
 	// Generate access token (6h)
-	accessToken, err := utils.GenerateAccessToken(user.ID, user.Role)
+	accessToken, err := utils_auth.GenerateAccessToken(user.ID, user.Role)
 	if err != nil {
 		return nil, errors.New("failed to generate access token")
 	}
 
 	// Generate refresh token (24h)
-	refreshToken, err := utils.GenerateRefreshToken(user.ID, user.Role)
+	refreshToken, err := utils_auth.GenerateRefreshToken(user.ID, user.Role)
 	if err != nil {
 		return nil, errors.New("failed to generate refresh token")
 	}
@@ -162,7 +162,7 @@ func (s *authServiceImpl) generateTokenPair(user *models.User) (*dto.AuthRespons
 		return nil, errors.New("failed to save refresh token")
 	}
 
-	return &dto.AuthResponse{
+	return &dto_auth.AuthResponse{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 		Role:         user.Role,

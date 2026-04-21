@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"backend-template/internal/modules/auth/utils"
+	utils_auth "backend-template/internal/modules/auth/utils"
 	apputils "backend-template/internal/utils"
 
 	"github.com/gofiber/fiber/v3"
@@ -18,11 +18,10 @@ func RoleMiddleware(requiredRole string) fiber.Handler {
 		}
 
 		// Check if user's role meets the required permission level
-		if !utils.HasPermission(userRole, requiredRole) {
+		if !utils_auth.HasPermission(userRole, requiredRole) {
 			return apputils.ErrorResponse(c, fiber.StatusForbidden, "Forbidden: insufficient permissions")
 		}
 
 		return c.Next()
 	}
 }
-

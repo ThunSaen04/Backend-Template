@@ -1,4 +1,4 @@
-package repository
+package repository_auth
 
 import (
 	"backend-template/internal/models"
