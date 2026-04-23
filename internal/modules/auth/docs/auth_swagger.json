@@ -4,7 +4,7 @@
         "description": "Authentication and authorization module — Register, Login, Token Refresh, Logout, and Profile management.",
         "title": "Auth Service API",
         "contact": {},
-        "version": "1.0.0"
+        "version": "1.1.0"
     },
     "host": "localhost:8080",
     "basePath": "/",
@@ -23,7 +23,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     }
                 }
@@ -49,7 +49,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginRequest"
+                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.LoginRequest"
                         }
                     }
                 ],
@@ -59,13 +59,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.AuthResponse"
                                         }
                                     }
                                 }
@@ -75,19 +75,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -118,7 +118,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RefreshRequest"
+                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.RefreshRequest"
                         }
                     }
                 ],
@@ -126,25 +126,25 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -171,13 +171,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ProfileData"
+                                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.ProfileData"
                                         }
                                     }
                                 }
@@ -187,13 +187,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -219,7 +219,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RefreshRequest"
+                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.RefreshRequest"
                         }
                     }
                 ],
@@ -229,13 +229,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.AuthResponse"
                                         }
                                     }
                                 }
@@ -245,19 +245,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -283,7 +283,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterRequest"
+                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.RegisterRequest"
                         }
                     }
                 ],
@@ -293,13 +293,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/backend-template_internal_modules_auth_dto.AuthResponse"
                                         }
                                     }
                                 }
@@ -309,19 +309,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -346,19 +346,19 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -366,7 +366,7 @@
         }
     },
     "definitions": {
-        "dto.AuthResponse": {
+        "backend-template_internal_modules_auth_dto.AuthResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -387,34 +387,7 @@
                 }
             }
         },
-        "dto.DataResponse": {
-            "type": "object",
-            "properties": {
-                "data": {},
-                "message": {
-                    "type": "string",
-                    "example": "Operation successful"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": true
-                }
-            }
-        },
-        "dto.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "example": "An error occurred"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": false
-                }
-            }
-        },
-        "dto.LoginRequest": {
+        "backend-template_internal_modules_auth_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -431,20 +404,7 @@
                 }
             }
         },
-        "dto.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "example": "Operation successful"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": true
-                }
-            }
-        },
-        "dto.ProfileData": {
+        "backend-template_internal_modules_auth_dto.ProfileData": {
             "type": "object",
             "properties": {
                 "email": {
@@ -461,7 +421,7 @@
                 }
             }
         },
-        "dto.RefreshRequest": {
+        "backend-template_internal_modules_auth_dto.RefreshRequest": {
             "type": "object",
             "required": [
                 "refresh_token"
@@ -473,7 +433,7 @@
                 }
             }
         },
-        "dto.RegisterRequest": {
+        "backend-template_internal_modules_auth_dto.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -488,6 +448,46 @@
                     "type": "string",
                     "minLength": 6,
                     "example": "secret123"
+                }
+            }
+        },
+        "utils.DataResponseDTO": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string",
+                    "example": "Operation successful"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "utils.ErrorResponseDTO": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "An error occurred"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "utils.MessageResponseDTO": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Operation successful"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         }
