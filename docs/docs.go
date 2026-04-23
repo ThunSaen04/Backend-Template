@@ -29,7 +29,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     }
                 }
@@ -55,7 +55,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginRequest"
+                            "$ref": "#/definitions/dto_auth.LoginRequest"
                         }
                     }
                 ],
@@ -65,13 +65,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/dto_auth.AuthResponse"
                                         }
                                     }
                                 }
@@ -81,19 +81,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -124,7 +124,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RefreshRequest"
+                            "$ref": "#/definitions/dto_auth.RefreshRequest"
                         }
                     }
                 ],
@@ -132,25 +132,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -177,13 +177,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.ProfileData"
+                                            "$ref": "#/definitions/dto_auth.ProfileData"
                                         }
                                     }
                                 }
@@ -193,13 +193,13 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -225,7 +225,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RefreshRequest"
+                            "$ref": "#/definitions/dto_auth.RefreshRequest"
                         }
                     }
                 ],
@@ -235,13 +235,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/dto_auth.AuthResponse"
                                         }
                                     }
                                 }
@@ -251,19 +251,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -289,7 +289,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterRequest"
+                            "$ref": "#/definitions/dto_auth.RegisterRequest"
                         }
                     }
                 ],
@@ -299,13 +299,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/dto.DataResponse"
+                                    "$ref": "#/definitions/utils.DataResponseDTO"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/dto.AuthResponse"
+                                            "$ref": "#/definitions/dto_auth.AuthResponse"
                                         }
                                     }
                                 }
@@ -315,19 +315,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "422": {
                         "description": "Unprocessable Entity",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -352,19 +352,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/utils.MessageResponseDTO"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/utils.ErrorResponseDTO"
                         }
                     }
                 }
@@ -372,7 +372,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.AuthResponse": {
+        "dto_auth.AuthResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -393,34 +393,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DataResponse": {
-            "type": "object",
-            "properties": {
-                "data": {},
-                "message": {
-                    "type": "string",
-                    "example": "Operation successful"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": true
-                }
-            }
-        },
-        "dto.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "example": "An error occurred"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": false
-                }
-            }
-        },
-        "dto.LoginRequest": {
+        "dto_auth.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -437,20 +410,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MessageResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "example": "Operation successful"
-                },
-                "success": {
-                    "type": "boolean",
-                    "example": true
-                }
-            }
-        },
-        "dto.ProfileData": {
+        "dto_auth.ProfileData": {
             "type": "object",
             "properties": {
                 "email": {
@@ -467,7 +427,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RefreshRequest": {
+        "dto_auth.RefreshRequest": {
             "type": "object",
             "required": [
                 "refresh_token"
@@ -479,7 +439,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RegisterRequest": {
+        "dto_auth.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -494,6 +454,46 @@ const docTemplate = `{
                     "type": "string",
                     "minLength": 6,
                     "example": "secret123"
+                }
+            }
+        },
+        "utils.DataResponseDTO": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string",
+                    "example": "Operation successful"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "utils.ErrorResponseDTO": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "An error occurred"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "utils.MessageResponseDTO": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Operation successful"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         }

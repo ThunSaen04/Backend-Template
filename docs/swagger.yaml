@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  dto.AuthResponse:
+  dto_auth.AuthResponse:
     properties:
       access_token:
         example: eyJhbGciOiJIUzI1NiIs...
@@ -15,26 +15,7 @@ definitions:
         example: 1
         type: integer
     type: object
-  dto.DataResponse:
-    properties:
-      data: {}
-      message:
-        example: Operation successful
-        type: string
-      success:
-        example: true
-        type: boolean
-    type: object
-  dto.ErrorResponse:
-    properties:
-      message:
-        example: An error occurred
-        type: string
-      success:
-        example: false
-        type: boolean
-    type: object
-  dto.LoginRequest:
+  dto_auth.LoginRequest:
     properties:
       email:
         example: user@example.com
@@ -46,16 +27,7 @@ definitions:
     - email
     - password
     type: object
-  dto.MessageResponse:
-    properties:
-      message:
-        example: Operation successful
-        type: string
-      success:
-        example: true
-        type: boolean
-    type: object
-  dto.ProfileData:
+  dto_auth.ProfileData:
     properties:
       email:
         example: user@example.com
@@ -67,7 +39,7 @@ definitions:
         example: member
         type: string
     type: object
-  dto.RefreshRequest:
+  dto_auth.RefreshRequest:
     properties:
       refresh_token:
         example: eyJhbGciOiJIUzI1NiIs...
@@ -75,7 +47,7 @@ definitions:
     required:
     - refresh_token
     type: object
-  dto.RegisterRequest:
+  dto_auth.RegisterRequest:
     properties:
       email:
         example: user@example.com
@@ -87,6 +59,34 @@ definitions:
     required:
     - email
     - password
+    type: object
+  utils.DataResponseDTO:
+    properties:
+      data: {}
+      message:
+        example: Operation successful
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  utils.ErrorResponseDTO:
+    properties:
+      message:
+        example: An error occurred
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  utils.MessageResponseDTO:
+    properties:
+      message:
+        example: Operation successful
+        type: string
+      success:
+        example: true
+        type: boolean
     type: object
 host: localhost:8080
 info:
@@ -105,7 +105,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/utils.MessageResponseDTO'
       summary: Health check
       tags:
       - Auth
@@ -121,7 +121,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.LoginRequest'
+          $ref: '#/definitions/dto_auth.LoginRequest'
       produces:
       - application/json
       responses:
@@ -129,23 +129,23 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dto.DataResponse'
+            - $ref: '#/definitions/utils.DataResponseDTO'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.AuthResponse'
+                  $ref: '#/definitions/dto_auth.AuthResponse'
               type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "422":
           description: Unprocessable Entity
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       summary: Login user
       tags:
       - Auth
@@ -160,26 +160,26 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.RefreshRequest'
+          $ref: '#/definitions/dto_auth.RefreshRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/utils.MessageResponseDTO'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "422":
           description: Unprocessable Entity
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       security:
       - BearerAuth: []
       summary: Logout user
@@ -195,19 +195,19 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dto.DataResponse'
+            - $ref: '#/definitions/utils.DataResponseDTO'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.ProfileData'
+                  $ref: '#/definitions/dto_auth.ProfileData'
               type: object
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       security:
       - BearerAuth: []
       summary: Get user profile
@@ -225,7 +225,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.RefreshRequest'
+          $ref: '#/definitions/dto_auth.RefreshRequest'
       produces:
       - application/json
       responses:
@@ -233,23 +233,23 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/dto.DataResponse'
+            - $ref: '#/definitions/utils.DataResponseDTO'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.AuthResponse'
+                  $ref: '#/definitions/dto_auth.AuthResponse'
               type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "422":
           description: Unprocessable Entity
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       summary: Refresh access token
       tags:
       - Auth
@@ -265,7 +265,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.RegisterRequest'
+          $ref: '#/definitions/dto_auth.RegisterRequest'
       produces:
       - application/json
       responses:
@@ -273,23 +273,23 @@ paths:
           description: Created
           schema:
             allOf:
-            - $ref: '#/definitions/dto.DataResponse'
+            - $ref: '#/definitions/utils.DataResponseDTO'
             - properties:
                 data:
-                  $ref: '#/definitions/dto.AuthResponse'
+                  $ref: '#/definitions/dto_auth.AuthResponse'
               type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "409":
           description: Conflict
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "422":
           description: Unprocessable Entity
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       summary: Register a new user
       tags:
       - Auth
@@ -302,15 +302,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/utils.MessageResponseDTO'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/utils.ErrorResponseDTO'
       security:
       - BearerAuth: []
       summary: Get all users (Admin only)

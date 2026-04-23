@@ -25,11 +25,11 @@ func NewAuthHandler(service service_auth.AuthService) *AuthHandler {
 // @Tags         Auth
 // @Accept       json
 // @Produce      json
-// @Param        request  body      dto.RegisterRequest  true  "Registration data"
-// @Success      201      {object}  dto.DataResponse{data=dto.AuthResponse}
-// @Failure      400      {object}  dto.ErrorResponse
-// @Failure      409      {object}  dto.ErrorResponse
-// @Failure      422      {object}  dto.ErrorResponse
+// @Param        request  body      dto_auth.RegisterRequest  true  "Registration data"
+// @Success      201      {object}  apputils.DataResponseDTO{data=dto_auth.AuthResponse}
+// @Failure      400      {object}  apputils.ErrorResponseDTO
+// @Failure      409      {object}  apputils.ErrorResponseDTO
+// @Failure      422      {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/register [post]
 func (h *AuthHandler) Register(c fiber.Ctx) error {
 	var req dto_auth.RegisterRequest
@@ -57,11 +57,11 @@ func (h *AuthHandler) Register(c fiber.Ctx) error {
 // @Tags         Auth
 // @Accept       json
 // @Produce      json
-// @Param        request  body      dto.LoginRequest  true  "Login credentials"
-// @Success      200      {object}  dto.DataResponse{data=dto.AuthResponse}
-// @Failure      400      {object}  dto.ErrorResponse
-// @Failure      401      {object}  dto.ErrorResponse
-// @Failure      422      {object}  dto.ErrorResponse
+// @Param        request  body      dto_auth.LoginRequest  true  "Login credentials"
+// @Success      200      {object}  apputils.DataResponseDTO{data=dto_auth.AuthResponse}
+// @Failure      400      {object}  apputils.ErrorResponseDTO
+// @Failure      401      {object}  apputils.ErrorResponseDTO
+// @Failure      422      {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/login [post]
 func (h *AuthHandler) Login(c fiber.Ctx) error {
 	var req dto_auth.LoginRequest
@@ -89,11 +89,11 @@ func (h *AuthHandler) Login(c fiber.Ctx) error {
 // @Tags         Auth
 // @Accept       json
 // @Produce      json
-// @Param        request  body      dto.RefreshRequest  true  "Refresh token"
-// @Success      200      {object}  dto.DataResponse{data=dto.AuthResponse}
-// @Failure      400      {object}  dto.ErrorResponse
-// @Failure      401      {object}  dto.ErrorResponse
-// @Failure      422      {object}  dto.ErrorResponse
+// @Param        request  body      dto_auth.RefreshRequest  true  "Refresh token"
+// @Success      200      {object}  apputils.DataResponseDTO{data=dto_auth.AuthResponse}
+// @Failure      400      {object}  apputils.ErrorResponseDTO
+// @Failure      401      {object}  apputils.ErrorResponseDTO
+// @Failure      422      {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
 	var req dto_auth.RefreshRequest
@@ -122,11 +122,11 @@ func (h *AuthHandler) RefreshToken(c fiber.Ctx) error {
 // @Accept       json
 // @Produce      json
 // @Security     BearerAuth
-// @Param        request  body      dto.RefreshRequest  true  "Refresh token to revoke"
-// @Success      200      {object}  dto.MessageResponse
-// @Failure      400      {object}  dto.ErrorResponse
-// @Failure      401      {object}  dto.ErrorResponse
-// @Failure      422      {object}  dto.ErrorResponse
+// @Param        request  body      dto_auth.RefreshRequest  true  "Refresh token to revoke"
+// @Success      200      {object}  apputils.MessageResponseDTO
+// @Failure      400      {object}  apputils.ErrorResponseDTO
+// @Failure      401      {object}  apputils.ErrorResponseDTO
+// @Failure      422      {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/logout [post]
 func (h *AuthHandler) Logout(c fiber.Ctx) error {
 	var req dto_auth.RefreshRequest
@@ -153,9 +153,9 @@ func (h *AuthHandler) Logout(c fiber.Ctx) error {
 // @Tags         Auth
 // @Produce      json
 // @Security     BearerAuth
-// @Success      200  {object}  dto.DataResponse{data=dto.ProfileData}
-// @Failure      401  {object}  dto.ErrorResponse
-// @Failure      404  {object}  dto.ErrorResponse
+// @Success      200  {object}  apputils.DataResponseDTO{data=dto_auth.ProfileData}
+// @Failure      401  {object}  apputils.ErrorResponseDTO
+// @Failure      404  {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/profile [get]
 func (h *AuthHandler) GetProfile(c fiber.Ctx) error {
 	// Extract user_id from JWT claims stored in Locals by auth middleware
@@ -182,9 +182,9 @@ func (h *AuthHandler) GetProfile(c fiber.Ctx) error {
 // @Tags         Auth
 // @Produce      json
 // @Security     BearerAuth
-// @Success      200  {object}  dto.MessageResponse
-// @Failure      401  {object}  dto.ErrorResponse
-// @Failure      403  {object}  dto.ErrorResponse
+// @Success      200  {object}  apputils.MessageResponseDTO
+// @Failure      401  {object}  apputils.ErrorResponseDTO
+// @Failure      403  {object}  apputils.ErrorResponseDTO
 // @Router       /api/v1/auth/users [get]
 func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 	// This endpoint is protected by role middleware (admin only)
@@ -198,7 +198,7 @@ func (h *AuthHandler) GetAllUsers(c fiber.Ctx) error {
 // @Description  Check if the auth service is running and view role hierarchy.
 // @Tags         Auth
 // @Produce      json
-// @Success      200  {object}  dto.MessageResponse
+// @Success      200  {object}  apputils.MessageResponseDTO
 // @Router       /api/v1/auth/health [get]
 func (h *AuthHandler) HealthCheck(c fiber.Ctx) error {
 	return apputils.SuccessResponse(c, fiber.StatusOK, "Auth service is healthy", fiber.Map{
